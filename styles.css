@@ -1,43 +1,101 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    font-family: 'Arial', sans-serif;
     margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    color: #333;
 }
 
-.container {
-    text-align: center;
-    background-color: white;
+.weather-app {
+    max-width: 500px;
+    margin: 50px auto;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-input {
+.input-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.input {
+    flex: 1;
     padding: 10px;
-    margin: 10px 0;
-    width: 200px;
-    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
 }
 
-button {
+.search-button {
     padding: 10px 20px;
-    background-color: #28a745;
+    background: #4caf50;
     color: white;
     border: none;
-    cursor: pointer;
-    font-size: 16px;
     border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
 }
 
-button:hover {
-    background-color: #218838;
+.search-button:hover {
+    background: #45a049;
 }
 
-#weatherInfo {
-    margin-top: 20px;
-    font-size: 18px;
+.weather-info {
+    margin-bottom: 20px;
+}
+
+.weather-info .temp {
+    font-size: 3rem;
+    margin: 10px 0;
+    color: #4caf50;
+}
+
+.weather-info img {
+    width: 80px;
+    margin: 10px 0;
+}
+
+.weather-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.detail {
+    background: #f7f7f7;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.detail p {
+    margin: 5px 0;
+}
+
+.detail .value {
+    font-weight: bold;
+    color: #555;
+}
+
+footer {
+    margin-top: 30px;
+    padding: 10px;
+    text-align: center;
+    background: #333;
+    color: white;
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: #4caf50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
 }

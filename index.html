@@ -1,22 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Forecast</title>
+    <title>Weather App</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <div class="container">
-        <h1>Weather Forecast</h1>
-        <input type="text" id="city" placeholder="Enter city name">
-        <button onclick="getWeather()">Get Weather</button>
-
-        <div id="weatherInfo">
-            <!-- Weather data will be displayed here -->
+    <div class="weather-app">
+        <div class="input-container">
+            <input type="text" class="input" placeholder="Enter city name..." />
+            <button class="search-button">Search</button>
         </div>
-    </div>
+        <div class="weather-info">
+            <p class="city"></p>
+            <h2 class="temp"></h2>
+            <img class="icon" src="" alt="Weather Icon" />
+            <p class="description"></p>
+        </div>
+        <div class="weather-details">
+            <div class="detail">
+                <p>Humidity</p>
+                <p class="value humidity"></p>
+            </div>
+            <div class="detail">
+                <p>Clouds</p>
+                <p class="value clouds"></p>
+            </div>
+            <div class="detail">
+                <p>Visibility</p>
+                <p class="value visibility"></p>
+            </div>
+            <div class="detail">
+                <p>Wind</p>
+                <p class="value wind-dir"></p>
+            </div>
+            <div class="detail">
+                <p>Pressure</p>
+                <p class="value pressure"></p>
+            </div>
+        </div>
 
-    <script src="main.js"></script>
+
+        <footer>
+            &copy; 2024 Weather App. Designed by
+            <a href="https://weatherwebsitesprototype1.netlify.app/" target="_blank">Shusan Mainali</a>.
+        </footer>
+        <script src="main.js"></script>
 </body>
+
 </html>
