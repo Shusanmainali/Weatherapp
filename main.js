@@ -1,7 +1,23 @@
-const apiUrl = "http://localhost/Weatherapp/connection.php"; // Update to match your file path
+const apiUrl = "http://localhost/Weatherapp/connection.php";
 
 // Function to fetch weather data
 async function checkWeather(city = "Gadsden") {
+    const cacheKey = `weather_${city}`;
+    const cachedData = localStorage.getItem(cacheKey);
+
+    if (cachedData) {
+        const parsedData = JSON.parse(cachedData);
+        const lastUpdated = new Date(parsedData.timestamp);
+        const now = new Date();
+
+        // Use cache if it's less than 2 hours old
+        if ((now - lastUpdated) / (1000 * 60 * 60) < 2) {
+            updateDOM(parsedData);
+            console.log("Loaded from cache:", parsedData);
+            return;
+        }
+    }
+
     try {
         const response = await fetch(`${apiUrl}?q=${city}`);
         if (!response.ok) {
@@ -13,37 +29,43 @@ async function checkWeather(city = "Gadsden") {
             throw new Error(data.error);
         }
 
-        // Update the DOM
-        document.querySelector(".temp").innerText = `${data.temp}°C`;
-        document.querySelector(".city").innerText = data.city;
-        document.querySelector(".humidity").innerText = `${data.humidity}%`;
-        document.querySelector(".pressure").innerText = `${data.pressure} hPa`;
-        document.querySelector(".wind-dir").innerText = `${data.wind} km/h`;
-        document.querySelector(".description").innerText = "Weather data retrieved successfully.";
+        // Store data in localStorage with timestamp
+        data.timestamp = new Date().toISOString();
+        localStorage.setItem(cacheKey, JSON.stringify(data));
+
+        // Update UI
+        updateDOM(data);
+        console.log("Fetched from API and cached:", data);
     } catch (error) {
         alert(error.message);
     }
 }
 
-// Event listener for the search button
+// Function to update the UI
+function updateDOM(data) {
+    document.querySelector(".temp").innerText = `${data.temp}°C`;
+    document.querySelector(".city").innerText = data.city;
+    document.querySelector(".humidity").innerText = `${data.humidity}%`;
+    document.querySelector(".pressure").innerText = `${data.pressure} hPa`;
+    document.querySelector(".wind-dir").innerText = `${data.wind} km/h`;
+    document.querySelector(".description").innerText = "Weather data retrieved successfully.";
+}
+
+// Event listener for search button
 document.querySelector(".search-button").addEventListener("click", (event) => {
-    event.preventDefault();  // Prevent form submission (if it's inside a form)
-    
+    event.preventDefault();
     const cityInput = document.querySelector(".input").value;
     if (cityInput) {
-        // Update the URL with the new city name without reloading the page
         window.history.pushState(null, "", `?q=${encodeURIComponent(cityInput)}`);
-        
-        // Call the weather API to fetch data for the city
         checkWeather(cityInput);
     } else {
         alert("Please enter a city name!");
     }
 });
 
-// Automatically load weather for the city specified in the URL or default to "Gadsden"
+// Load weather for city from URL or default to "Gadsden"
 window.onload = () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const city = urlParams.get('q') || "Gadsden";  // Default to "Gadsden" if no city in URL
+    const city = urlParams.get('q') || "Gadsden";
     checkWeather(city);
 };
